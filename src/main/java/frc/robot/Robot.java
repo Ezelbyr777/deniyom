@@ -4,18 +4,10 @@
 
 package frc.robot;
 
-import java.nio.channels.Channel;
-
-import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import edu.wpi.first.wpilibj.motorcontrol.*;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -27,12 +19,12 @@ public class Robot extends TimedRobot {
  PWMVictorSPX left_m2 = new PWMVictorSPX(1);
  PWMVictorSPX right_m1 = new PWMVictorSPX(2);
  PWMVictorSPX right_m2 = new PWMVictorSPX(3);
- SpeedControllerGroup left_side = new SpeedControllerGroup(left_m1,left_m2);
- SpeedControllerGroup right_side = new SpeedControllerGroup(right_m1,right_m2);
+ MotorController left_side = new MotorController(right_m1, right_m2);
+ MotorController right_side = new MotorController (right_m1, right_m2);
 
  PWMVictorSPX arm_m = new PWMVictorSPX(4);
 
- DifferentialDrive m_myRobot;
+ MotorController m_myRobot;
  Joystick m_leftstick;
  Joystick m_rightstick;
 
@@ -50,7 +42,8 @@ JoystickButton gameButton12;
 
 @Override
 public void robotInit() {
-  m_myRobot = new DifferentialDrive(left_side,right_side);
+  m_myRobot = new MotorController((left_side));
+  m_myRobot = new MotorController((right_side));
   m_leftstick = new Joystick(0);
   m_rightstick = new Joystick(1);
 
@@ -65,14 +58,16 @@ public void robotInit() {
   gameButton9 = new JoystickButton(m_leftstick, 9);
   gameButton10 = new JoystickButton(m_leftstick, 10);
   gameButton12 = new JoystickButton(m_leftstick, 12);
+
 }
+
   @Override
   public void teleopPeriodic() {
   m_myRobot.tankDrive(m_leftstick.getY(),m_rightstick.getY());
 
-  if (gameButton1.get()) {
+  if (gameButton1.getAsBoolean()) {
     arm_m.set(0.3);
-} else if (gameButton2.get()) {
+} else if (gameButton2.getAsBoolean()) {
     arm_m.set(-0.3);
 } else {
     arm_m.set(0);
