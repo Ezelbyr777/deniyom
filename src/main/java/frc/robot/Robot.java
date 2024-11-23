@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
  PWMVictorSPX left_m2 = new PWMVictorSPX(1);
  PWMVictorSPX right_m1 = new PWMVictorSPX(2);
  PWMVictorSPX right_m2 = new PWMVictorSPX(3);
- MotorController left_side = new MotorController(right_m1, right_m2);
+ MotorController left_side = new MotorController(left_m1, left_m2);
  MotorController right_side = new MotorController (right_m1, right_m2);
 
  PWMVictorSPX arm_m = new PWMVictorSPX(4);
